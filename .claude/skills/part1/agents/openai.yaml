@@ -1,0 +1,4 @@
+interface:
+  display_name: "Part1"
+  short_description: "Plan an effort into PRD, issues, and pushed handoff."
+  default_prompt: "/part1"

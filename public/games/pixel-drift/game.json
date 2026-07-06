@@ -1,0 +1,10 @@
+{
+  "slug": "pixel-drift",
+  "title": "Pixel Drift",
+  "description": "Dodge falling pixels in this fast-paced arcade game. Move with arrow keys or mouse.",
+  "tags": ["arcade", "action", "retro"],
+  "controls": "both",
+  "entry": "index.html",
+  "thumbnail": "/games/pixel-drift/thumbnail.svg",
+  "featured": true
+}

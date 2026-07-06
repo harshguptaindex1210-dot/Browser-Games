@@ -1,0 +1,4 @@
+interface:
+  display_name: "Part3"
+  short_description: "Review, fix, verify, and close the loop with a pushed handoff."
+  default_prompt: "/part3"

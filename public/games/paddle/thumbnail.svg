@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120" viewBox="0 0 160 120">
+  <rect width="160" height="120" fill="#16213e"/>
+  <rect x="60" y="90" width="40" height="8" fill="#e94560"/>
+  <circle cx="80" cy="50" r="8" fill="#eee"/>
+  <text x="80" y="20" text-anchor="middle" fill="#eee" font-size="12">Paddle</text>
+</svg>

@@ -1,0 +1,10 @@
+{
+  "slug": "snake",
+  "title": "Snake",
+  "description": "Classic snake arcade stub.",
+  "tags": ["arcade", "classic"],
+  "controls": "keyboard",
+  "entry": "index.html",
+  "thumbnail": "/games/snake/thumbnail.svg",
+  "featured": false
+}

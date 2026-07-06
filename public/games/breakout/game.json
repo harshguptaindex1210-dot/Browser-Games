@@ -1,0 +1,10 @@
+{
+  "slug": "breakout",
+  "title": "Breakout",
+  "description": "Brick breaker arcade stub.",
+  "tags": ["arcade", "action"],
+  "controls": "mouse",
+  "entry": "index.html",
+  "thumbnail": "/games/breakout/thumbnail.svg",
+  "featured": true
+}

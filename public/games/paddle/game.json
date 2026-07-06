@@ -1,0 +1,10 @@
+{
+  "slug": "paddle",
+  "title": "Paddle",
+  "description": "A simple paddle game stub for testing the Game Adapter.",
+  "tags": ["arcade", "action"],
+  "controls": "both",
+  "entry": "index.html",
+  "thumbnail": "/games/paddle/thumbnail.svg",
+  "featured": true
+}

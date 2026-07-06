@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handoff"
+  short_description: "Write and push repo-local CONTEXT handoffs."
+  default_prompt: "/handoff"

@@ -1,0 +1,12 @@
+{
+  "slug": "tictactoe-mp",
+  "title": "Tic-Tac-Toe Online",
+  "description": "Turn-based multiplayer tic-tac-toe over PartyKit.",
+  "tags": ["multiplayer", "puzzle"],
+  "controls": "both",
+  "entry": "index.html",
+  "thumbnail": "/games/tictactoe-mp/thumbnail.svg",
+  "featured": true,
+  "multiplayer": true,
+  "partykitRoom": "main"
+}

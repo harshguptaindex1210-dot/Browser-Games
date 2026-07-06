@@ -1,0 +1,4 @@
+interface:
+  display_name: "Part2"
+  short_description: "Implement the next issue with TDD and a pushed handoff."
+  default_prompt: "/part2"

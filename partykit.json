@@ -1,0 +1,5 @@
+{
+  "name": "browser-games-party",
+  "main": "party/main.ts",
+  "compatibilityDate": "2024-01-01"
+}
