@@ -1,0 +1,22 @@
+# ADR-0002 — Game catalog expansion: local + external games
+
+- **Status:** Accepted
+- **Date:** 2026-07-07
+- **Context:** S1 foundation is done. The site has 5 stub games. The user wants ~25 real games across racing, fighting, clicker, and simulator genres — a mix of downloaded free games and embedded games from GameDistribution. Need to decide the architecture for supporting two game types (local + external) in the same catalog.
+- **Decision:**
+  - Extend the manifest (`game.json`) with a `source` field: `"local"` or `"external"`.
+  - Local games: code in `games/<slug>/`, loaded in a sandboxed iframe (no `allow-same-origin`), talk to the Site via the Game Adapter postMessage contract. Full save support.
+  - External games: embedded from GameDistribution via their embed URL. Loaded in a Wrapper Page — a Site page that nests the external iframe inside a sandboxed wrapper. The wrapper provides partial saves (last-played, high-score if available). The external iframe gets `allow-same-origin` (needed for GameDistribution) but is isolated from the Site by the wrapper's sandbox.
+  - Catalog generator reads both types from manifests and emits a unified catalog index.
+  - CSP updated to allow GameDistribution frame sources.
+- **Consequences:**
+  - (+) Unified catalog — users see local and external games in the same browse/search/tag experience.
+  - (+) External games add bulk to the catalog without repo bloat.
+  - (−) Two iframe sandboxing patterns to maintain.
+  - (−) External games have partial saves only — high scores may not be available for all GameDistribution games.
+  - (−) License risk on downloaded games without clear licenses (D15). Accepted by operator.
+  - (−) Dependency on GameDistribution uptime for ~10 external games.
+- **Alternatives considered:**
+  - All local games — rejected: user wants 25 games fast; downloading and testing 25 games is slow.
+  - All embedded — rejected: user wants to own some game files and have full saves.
+  - Separate catalogs — rejected: user wants one CrazyGames-style browse experience.
