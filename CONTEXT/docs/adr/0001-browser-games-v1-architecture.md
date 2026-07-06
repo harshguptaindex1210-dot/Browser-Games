@@ -1,0 +1,25 @@
+# ADR-0001 — Browser-Games v1 architecture
+
+- **Status:** Accepted
+- **Date:** 2026-07-06
+- **Context:** Planning the v1 of a CrazyGames-style browser-games portal. Need to pick a stack and a game-runtime seam before any code is written. See `CONTEXT/CONTEXT.md` decisions D1–D11 and invariants.
+- **Decision:**
+  - Next.js (App Router) full-stack, deployed to Vercel.
+  - Games are self-contained HTML5 bundles in `games/<slug>/`, loaded in sandboxed iframes (no `allow-same-origin`) on the Player Page.
+  - Site ↔ Game communication via a postMessage **Game Adapter** with a fixed message-type allowlist.
+  - Anonymous device-local persistence: device-id cookie + IndexedDB Save Slots per game.
+  - Catalog is build-time generated from each game's `game.json` manifest; client-side search over the static index.
+  - One turn-based multiplayer game in v1 over PartyKit (serverless websockets).
+  - Ads via Google AdSense in an isolated sandboxed Ad Slot that degrades to a house ad.
+- **Consequences:**
+  - (+) Strong game isolation; a buggy/malicious game cannot reach Site state.
+  - (+) Adding a game is a commit, no admin UI needed for small-product scale.
+  - (+) No DB to operate for v1.
+  - (−) `allow-scripts` without `allow-same-origin` means games must use postMessage (not localStorage) for saves — documented in the Game Adapter contract.
+  - (−) Multiplayer is one example; scaling to many multiplayer games is a future effort.
+  - (−) Data loss on browser-data clear is accepted for v1.
+- **Alternatives considered:**
+  - In-page React components for games — rejected: couples game code to site build, crashes risk the whole page.
+  - Self-hosted Socket.io — rejected: more ops burden, worse fit for Vercel.
+  - Managed pub-sub (Ably) — rejected: paid at scale, vendor lock-in.
+  - DB + admin UI catalog — rejected: overkill at small-product scale.
