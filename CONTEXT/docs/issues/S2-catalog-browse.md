@@ -26,12 +26,4 @@ Build catalog browsing on top of S1's foundation:
 
 ## Blocked by
 
-- S1 (foundation tracer must be in place: catalog generator, Player Page, device-id, IndexedDB).
-
-## Verification-command
-
-```
-npm run build && npx playwright test --project=catalog
-```
-
-Exits 0 when the build includes ≥3 games, the catalog Playwright suite passes (homepage rows, tag page, card→player navigation), and TTFB assertion holds.
+- #6

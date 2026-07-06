@@ -24,13 +24,5 @@ Polish the catalog for search engines and validate it scales to a second real ga
 
 ## Blocked by
 
-- S2 (catalog browse, Game Card, tag pages).
-- S3 (search index + search perf baseline).
-
-## Verification-command
-
-```
-npm run build && npm run test:perf -- search --fixture=500 && npx playwright test --project=seo
-```
-
-Exits 0 when the build emits sitemap + per-page meta, the 500-game search-perf test passes (INV-P3), and the SEO Playwright suite passes.
+- #3
+- #1

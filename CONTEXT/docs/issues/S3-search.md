@@ -22,12 +22,4 @@ Add client-side free-text search over the catalog:
 
 ## Blocked by
 
-- S2 (catalog + Game Card must exist to render results).
-
-## Verification-command
-
-```
-npm run build && npm run test -- --run search && npm run test:perf -- search
-```
-
-Exits 0 when the build ships the search index, search unit tests pass, and the search perf test asserts ≤50ms p95 over the 500-game fixture (INV-P3).
+- #3

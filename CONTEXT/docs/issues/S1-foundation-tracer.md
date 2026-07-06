@@ -39,12 +39,4 @@ Stand up the Next.js (App Router) app deployed to Vercel, with one stub game (`g
 
 ## Blocked by
 
-None — can start immediately.
-
-## Verification-command
-
-```
-npm run build && npm run test -- --run && npx playwright test --project=smoke
-```
-
-Exits 0 exactly when the build passes (catalog generation + manifest validation), unit tests pass (Game Adapter contract), and the Playwright smoke test (open Player Page, iframe boots, save round-trips, reload-fallback triggers on a frozen stub) passes.
+None - can start immediately. (GitHub issue #6)

@@ -27,12 +27,4 @@ Ship one turn-based multiplayer game using PartyKit:
 
 ## Blocked by
 
-- S1 (Player Page, Game Adapter, CSP with `connect-src *.partykit.io` must exist).
-
-## Verification-command
-
-```
-npm run build && npm run test -- --run multiplayer && npx partykit test && npx playwright test --project=multiplayer
-```
-
-Exits 0 when build + unit tests + PartyKit room tests (create/join/leave/expiry/no-leak) + Playwright multiplayer e2e (reconnect banner, room-code flow) pass.
+- #6

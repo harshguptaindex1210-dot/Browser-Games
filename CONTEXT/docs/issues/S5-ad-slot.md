@@ -24,12 +24,4 @@ Add an isolated Ad Slot component:
 
 ## Blocked by
 
-- S1 (CSP header + sandboxed iframe infrastructure must exist).
-
-## Verification-command
-
-```
-npm run build && npm run test -- --run adslot && npx playwright test --project=adslot
-```
-
-Exits 0 when the Ad Slot unit + e2e tests pass, including the ad-block fallback asserting house ad renders ≤500ms with no CLS (INV-F1).
+- #6

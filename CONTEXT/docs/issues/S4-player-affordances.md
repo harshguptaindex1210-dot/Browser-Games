@@ -24,12 +24,4 @@ Add four Player Page affordances, all wired through the Game Adapter so games st
 
 ## Blocked by
 
-- S1 (Player Page + Game Adapter + IndexedDB Save Slots must exist).
-
-## Verification-command
-
-```
-npm run build && npm run test -- --run affordances && npx playwright test --project=affordances
-```
-
-Exits 0 when build + unit + Playwright affordances suite pass.
+- #6
