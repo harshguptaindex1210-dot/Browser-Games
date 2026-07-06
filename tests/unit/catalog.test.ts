@@ -69,4 +69,73 @@ describe("catalog generation", () => {
       ),
     ).toThrow(/"tags" must be an array of strings/);
   });
+
+  it("rejects external manifest missing embedUrl (INV-F5)", () => {
+    expect(() =>
+      validateManifest(
+        { slug: "ext1", title: "Ext", description: "d", tags: [], controls: "mouse", entry: "index.html", thumbnail: "/x.png", source: "external" },
+        "games/ext1/game.json",
+      ),
+    ).toThrow(/external games require a valid "embedUrl"/);
+  });
+
+  it("accepts valid external manifest with embedUrl", () => {
+    const m = validateManifest(
+      { slug: "ext1", title: "Ext", description: "d", tags: ["racing"], controls: "mouse", entry: "index.html", thumbnail: "/x.png", source: "external", embedUrl: "https://html5.gamedistribution.com/abc123/" },
+      "games/ext1/game.json",
+    );
+    expect(m.source).toBe("external");
+    expect(m.embedUrl).toBe("https://html5.gamedistribution.com/abc123/");
+  });
+
+  it("rejects invalid embedUrl (not a URL)", () => {
+    expect(() =>
+      validateManifest(
+        { slug: "ext1", title: "Ext", description: "d", tags: [], controls: "mouse", entry: "index.html", thumbnail: "/x.png", source: "external", embedUrl: "not-a-url" },
+        "games/ext1/game.json",
+      ),
+    ).toThrow(/external games require a valid "embedUrl"/);
+  });
+
+  it("rejects invalid genre", () => {
+    expect(() =>
+      validateManifest(
+        { slug: "g1", title: "G", description: "d", tags: [], controls: "mouse", entry: "index.html", thumbnail: "/x.png", genre: "invalid-genre" },
+        "games/g1/game.json",
+      ),
+    ).toThrow(/"genre" must be one of/);
+  });
+
+  it("accepts valid genre", () => {
+    const m = validateManifest(
+      { slug: "g1", title: "G", description: "d", tags: [], controls: "mouse", entry: "index.html", thumbnail: "/x.png", genre: "racing" },
+      "games/g1/game.json",
+    );
+    expect(m.genre).toBe("racing");
+  });
+
+  it("loads catalog with mixed local + external games", () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "bg-mixed-"));
+    const localDir = path.join(tmp, "local1");
+    fs.mkdirSync(localDir);
+    fs.writeFileSync(
+      path.join(localDir, "game.json"),
+      JSON.stringify({ slug: "local1", title: "Local", description: "d", tags: ["arcade"], controls: "mouse", entry: "index.html", thumbnail: "/x.png" }),
+    );
+    const extDir = path.join(tmp, "ext1");
+    fs.mkdirSync(extDir);
+    fs.writeFileSync(
+      path.join(extDir, "game.json"),
+      JSON.stringify({ slug: "ext1", title: "External", description: "d", tags: ["racing"], controls: "mouse", entry: "index.html", thumbnail: "/x.png", source: "external", embedUrl: "https://html5.gamedistribution.com/abc123/" }),
+    );
+    const catalog = loadCatalogFromGamesDir(tmp);
+    expect(catalog.games.length).toBe(2);
+    const local = catalog.games.find((g) => g.slug === "local1");
+    const ext = catalog.games.find((g) => g.slug === "ext1");
+    expect(local?.source).toBe("local");
+    expect(ext?.source).toBe("external");
+    expect(ext?.embedUrl).toBe("https://html5.gamedistribution.com/abc123/");
+    expect(local?.gamePath).toBe("/games/local1/index.html");
+    expect(ext?.gamePath).toBe("https://html5.gamedistribution.com/abc123/");
+  });
 });

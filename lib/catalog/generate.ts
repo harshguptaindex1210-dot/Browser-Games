@@ -5,10 +5,12 @@ import {
   type CatalogIndex,
   type GameManifest,
   REQUIRED_MANIFEST_FIELDS,
+  VALID_GENRES,
 } from "./types";
 
 const ENTRY_RE = /^[A-Za-z0-9._-]+\.html?$/i;
 const VALID_CONTROLS = ["mouse", "keyboard", "both"];
+const EMBED_URL_RE = /^https?:\/\/.+/i;
 
 export function validateManifest(
   raw: unknown,
@@ -50,6 +52,25 @@ export function validateManifest(
     throw new Error(`Invalid manifest at ${filePath}: "thumbnail" must be a non-empty string`);
   }
 
+  const source = manifest.source as string | undefined;
+  if (source !== undefined && source !== "local" && source !== "external") {
+    throw new Error(`Invalid manifest at ${filePath}: "source" must be "local" or "external"`);
+  }
+
+  const isExternal = source === "external";
+
+  if (isExternal) {
+    if (typeof manifest.embedUrl !== "string" || !EMBED_URL_RE.test(manifest.embedUrl)) {
+      throw new Error(`Invalid manifest at ${filePath}: external games require a valid "embedUrl" (must be an http(s) URL)`);
+    }
+  }
+
+  if (manifest.genre !== undefined) {
+    if (typeof manifest.genre !== "string" || !VALID_GENRES.includes(manifest.genre as any)) {
+      throw new Error(`Invalid manifest at ${filePath}: "genre" must be one of ${VALID_GENRES.join(", ")}`);
+    }
+  }
+
   return manifest as unknown as GameManifest;
 }
 
@@ -83,7 +104,10 @@ export function loadCatalogFromGamesDir(gamesDir: string): CatalogIndex {
 
     entries.push({
       ...manifest,
-      gamePath: `/games/${slug}/${manifest.entry}`,
+      source: manifest.source ?? "local",
+      gamePath: isExternalGame(manifest)
+        ? manifest.embedUrl!
+        : `/games/${slug}/${manifest.entry}`,
     });
   }
 
@@ -94,6 +118,10 @@ export function loadCatalogFromGamesDir(gamesDir: string): CatalogIndex {
     games: entries,
     tags: [...tagSet].sort(),
   };
+}
+
+function isExternalGame(manifest: GameManifest): boolean {
+  return manifest.source === "external";
 }
 
 export function getGameBySlug(

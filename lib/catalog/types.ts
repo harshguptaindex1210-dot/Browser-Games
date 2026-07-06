@@ -1,3 +1,15 @@
+export type GameSource = "local" | "external";
+
+export type GameGenre =
+  | "racing"
+  | "fighting"
+  | "clicker"
+  | "simulator"
+  | "arcade"
+  | "action"
+  | "puzzle"
+  | "strategy";
+
 export interface GameManifest {
   slug: string;
   title: string;
@@ -9,6 +21,10 @@ export interface GameManifest {
   featured?: boolean;
   multiplayer?: boolean;
   partykitRoom?: string;
+  source?: GameSource;
+  embedUrl?: string;
+  license?: string;
+  genre?: GameGenre;
 }
 
 export interface CatalogEntry extends GameManifest {
@@ -29,4 +45,15 @@ export const REQUIRED_MANIFEST_FIELDS: (keyof GameManifest)[] = [
   "controls",
   "entry",
   "thumbnail",
+];
+
+export const VALID_GENRES: GameGenre[] = [
+  "racing",
+  "fighting",
+  "clicker",
+  "simulator",
+  "arcade",
+  "action",
+  "puzzle",
+  "strategy",
 ];
