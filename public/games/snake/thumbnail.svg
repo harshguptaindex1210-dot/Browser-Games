@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120" viewBox="0 0 160 120">
-  <rect width="160" height="120" fill="#1b4332"/>
-  <rect x="40" y="50" width="80" height="12" rx="4" fill="#95d5b2"/>
-  <text x="80" y="30" text-anchor="middle" fill="#eee" font-size="12">Snake</text>
-</svg>

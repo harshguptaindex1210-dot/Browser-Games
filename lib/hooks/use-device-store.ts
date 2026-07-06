@@ -38,9 +38,7 @@ export function useDeviceStore() {
       const db = await openSaveDb();
       if (!db) {
         setIdbDisabled(true);
-        if (shouldShowIdbToast()) {
-          console.warn("[SaveSlot] IndexedDB unavailable");
-        }
+        console.warn("[SaveSlot] IndexedDB unavailable");
       }
       storeRef.current = createSaveStore(db);
       setReady(true);

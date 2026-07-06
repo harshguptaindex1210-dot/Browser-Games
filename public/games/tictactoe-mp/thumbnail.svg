@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120" viewBox="0 0 160 120">
-  <rect width="160" height="120" fill="#2d3436"/>
-  <line x1="53" y1="20" x2="53" y2="100" stroke="#dfe6e9" stroke-width="2"/>
-  <line x1="107" y1="20" x2="107" y2="100" stroke="#dfe6e9" stroke-width="2"/>
-  <line x1="20" y1="47" x2="140" y2="47" stroke="#dfe6e9" stroke-width="2"/>
-  <line x1="20" y1="73" x2="140" y2="73" stroke="#dfe6e9" stroke-width="2"/>
-  <text x="80" y="115" text-anchor="middle" fill="#eee" font-size="10">Tic-Tac-Toe</text>
-</svg>

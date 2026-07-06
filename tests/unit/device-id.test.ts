@@ -12,11 +12,12 @@ describe("device identity", () => {
     expect(isValidDeviceId(id)).toBe(true);
   });
 
-  it("sets cookie with SameSite=Lax and 1-year max-age", () => {
+  it("sets cookie with SameSite=Lax, HttpOnly, and 1-year max-age (INV-S4)", () => {
     const id = generateDeviceId();
     const cookie = buildDeviceCookie(id);
     expect(cookie).toContain("__bg_did=");
     expect(cookie).toContain("SameSite=Lax");
+    expect(cookie).toContain("HttpOnly");
     expect(cookie).toContain("Max-Age=31536000");
   });
 

@@ -8,3 +8,9 @@ test-results/
 .env.local
 *.log
 .DS_Store
+tsconfig.tsbuildinfo
+lib/catalog/catalog.json
+public/search-index.json
+public/sitemap.xml
+public/games/
+public/robots.txt

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { handleGameMessage } from "@/lib/game-adapter/handler";
+import { handleGameMessage, buildSaveWriteKey } from "@/lib/game-adapter/handler";
 import {
   GAME_TO_SITE_TYPES,
   IFRAME_SANDBOX,
@@ -135,6 +135,29 @@ describe("Game Adapter handler", () => {
     );
     expect(saveSlotKey("snake", "progress")).toBe(
       "games/snake/saves/progress",
+    );
+  });
+
+  it("SAVE_WRITE uses server-supplied gameSlug, not payload slug (INV-S5)", () => {
+    const handlers = { onSaveWrite: vi.fn() };
+    const c = ctx(handlers);
+    // Game tries to inject a different slug in the payload
+    const accepted = handleGameMessage(c, {
+      origin: ORIGIN,
+      data: {
+        type: "SAVE_WRITE",
+        payload: { slot: "progress", data: "{}", slug: "snake" },
+      },
+    });
+    expect(accepted).toBe(true);
+    // The handler should be called with the SERVER's gameSlug (paddle), not "snake"
+    expect(handlers.onSaveWrite).toHaveBeenCalledWith(
+      "progress",
+      "{}",
+    );
+    // And buildSaveWriteKey uses ctx.gameSlug
+    expect(buildSaveWriteKey(c.gameSlug, "progress")).toBe(
+      "games/paddle/saves/progress",
     );
   });
 

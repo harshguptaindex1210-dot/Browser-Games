@@ -19,9 +19,7 @@ export function shouldShowIdbToast(): boolean {
   if (toastShown) return false;
   toastShown = true;
   return true;
-}
-
-export async function openSaveDb(): Promise<IDBDatabase | null> {
+}export async function openSaveDb(): Promise<IDBDatabase | null> {
   if (typeof indexedDB === "undefined") return null;
 
   return new Promise((resolve) => {

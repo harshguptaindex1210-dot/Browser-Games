@@ -40,3 +40,11 @@ Stand up the Next.js (App Router) app deployed to Vercel, with one stub game (`g
 ## Blocked by
 
 None - can start immediately. (GitHub issue #6)
+
+## Verification-command
+
+```
+npm run gate && npx playwright test
+```
+
+Exits 0 when lint (tsc), unit tests (vitest), build (next build + catalog generation), and e2e tests (playwright) all pass.

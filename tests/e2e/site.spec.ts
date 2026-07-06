@@ -69,7 +69,7 @@ test.describe("ad slot", () => {
     const start = Date.now();
     await page.goto("/play/paddle");
     await expect(page.getByTestId("house-ad")).toBeVisible({ timeout: 5000 });
-    expect(Date.now() - start).toBeLessThan(5000);
+    expect(Date.now() - start).toBeLessThan(3000);
   });
 });
 
@@ -80,5 +80,24 @@ test.describe("SEO", () => {
     expect(html).toContain("application/ld+json");
     expect(html).toContain("VideoGame");
     expect(html).toContain("og:title");
+  });
+});
+
+test.describe("CSP header (INV-S7)", () => {
+  test("response has CSP with no unsafe-eval", async ({ request }) => {
+    const res = await request.get("/");
+    const csp = res.headers()["content-security-policy"] ?? "";
+    expect(csp).not.toContain("unsafe-eval");
+    expect(csp).toContain("default-src 'self'");
+    expect(csp).toContain("frame-src 'self'");
+  });
+});
+
+test.describe("anonymous play", () => {
+  test("no login prompt on player page", async ({ page }) => {
+    await page.goto("/play/paddle");
+    await expect(page.getByTestId("player-page")).toBeVisible();
+    await expect(page.locator("input[type=password]")).toHaveCount(0);
+    await expect(page.locator("[data-testid=login]")).toHaveCount(0);
   });
 });
